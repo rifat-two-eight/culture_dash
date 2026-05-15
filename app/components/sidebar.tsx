@@ -1,0 +1,75 @@
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  Users,
+  ShieldCheck,
+  Package,
+  Radio,
+  Repeat,
+  ShoppingCart,
+  AlertTriangle,
+  DollarSign,
+  Zap,
+  LayoutGrid,
+  Bell,
+  BarChart3,
+  Settings,
+} from "lucide-react";
+
+const menuItems = [
+  { name: "Overview", icon: LayoutDashboard, href: "/overview" },
+  { name: "Users", icon: Users, href: "/users" },
+  { name: "Seller Verification", icon: ShieldCheck, href: "/seller-verification" },
+  { name: "Listings", icon: Package, href: "/listings" },
+  { name: "Live Streams", icon: Radio, href: "/live-streams" },
+  { name: "Trades", icon: Repeat, href: "/trades" },
+  { name: "Orders", icon: ShoppingCart, href: "/orders" },
+  { name: "Disputes", icon: AlertTriangle, href: "/disputes" },
+  { name: "Payments", icon: DollarSign, href: "/payments" },
+  { name: "Boosted Listings", icon: Zap, href: "/boosted-listings" },
+  { name: "Categories", icon: LayoutGrid, href: "/categories" },
+  { name: "Notifications", icon: Bell, href: "/notifications" },
+  { name: "Reports", icon: BarChart3, href: "/reports" },
+  { name: "Settings", icon: Settings, href: "/settings" },
+];
+
+export default function Sidebar() {
+  const pathname = usePathname();
+
+  return (
+    <aside className="w-64 bg-[#111111] border-r border-white/5 flex flex-col h-screen sticky top-0 overflow-hidden">
+      <div className="p-6">
+        <h1 className="text-xl font-bold tracking-tight text-white">Admin Dashboard</h1>
+      </div>
+
+      <nav className="flex-1 overflow-y-auto custom-scrollbar px-3 space-y-1 py-4">
+        {menuItems.map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
+                isActive
+                  ? "bg-[#155DFC] text-white shadow-lg shadow-[#155DFC]/20"
+                  : "text-zinc-400 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <item.icon
+                size={20}
+                className={isActive ? "text-white" : "text-zinc-500 group-hover:text-white"}
+              />
+              <span className={`text-sm font-medium`}>
+                {item.name}
+              </span>
+            </Link>
+          );
+        })}
+      </nav>
+    </aside>
+  );
+}
